@@ -1,0 +1,39 @@
+version: "3.6"
+services:
+  asocore-core-frontend:
+    container_name: asocore-core-frontend-con
+    build: ./frontend
+    ports: 
+      - 5000:5000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+  asocore-core-backend:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      PORT: 5001
+      NODE_ENV: dev
+    ports: 
+      - 5001:5001
+    container_name: asocore-core-backend-con
+    volumes:
+      - ./backend/src:/app/src
+  db:
+    image: mysql
+    restart: always
+    container_name: asocore-core-db-con
+    environment:
+      MYSQL_DATABASE: 'asocore-core-db'
+      MYSQL_USER: 'asocore'
+      MYSQL_PASSWORD: '123456'
+      MYSQL_ROOT_PASSWORD: ''
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:

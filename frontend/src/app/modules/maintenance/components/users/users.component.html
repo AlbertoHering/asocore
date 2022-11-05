@@ -1,0 +1,15 @@
+<app-page-title [title]="title"></app-page-title>
+<app-loader></app-loader>
+<app-users-actions
+  (filtersEvent)="applyFilters($event)"
+  (newUserEvent)="createUser($event)"
+></app-users-actions>
+<app-data-table
+  *ngIf="filteredUsers"
+  [dataList]="filteredUsers"
+  [columns]="columns"
+  (deleteEvent)="deleteUser($event)"
+  (viewEvent)="viewUser($event)"
+  (updateEvent)="updateUser($event)"
+  class="users-table"
+></app-data-table>
